@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weather Api</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="output"></div>
+   
+
+    <script>
+        async function weather() {
+            // const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m");
+            // const data = await res.json()
+            // console.log(data.hourly)
+            // let result = ""
+            // data.hourly.forEach((element,index) => {
+            //     result += 
+            //     `
+            //     <tr>
+            //         <td>${index+1}</td>
+            //         <td>${element.relative_humidity_2m}</td>
+            //         <td>${element.temperature_2m}</td>
+            //         <td>${element.time}</td>
+            //         <td>${element.wind_speed_10m}</td>
+            //     </tr>
+            //     `
+            // });
+            // document.querySelector('#tabledata').innerHTML= result
+            const url = 'https://weatherapi-com.p.rapidapi.com/current.json?q=53.1%2C-0.13';
+            const options = {
+                method: 'GET',
+                headers: {
+                    'x-rapidapi-key': 'e71e481b56mshe6f990f7b3b7c55p1bbfb0jsn5aca0fbce7f7',
+                    'x-rapidapi-host': 'weatherapi-com.p.rapidapi.com'
+                }
+            };
+
+            try {
+                const response = await fetch(url, options);
+                const result = await response.json();
+                const current = result.current.condition.text
+                const currentIcon = result.current.condition.icon   
+                const location = result.location.name
+                console.log(current);
+                console.log(location);
+            document.querySelector('#output').innerHTML += `<img src="${currentIcon}"/> ${current}  ${location}`
+
+            } catch (error) {
+                console.error(error);
+            }
+
+        }
+        weather()
+    </script>
+</body>
+
+</html>
